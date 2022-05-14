@@ -1,0 +1,1 @@
+Logic beind this is simple , Run dfs around the edges of grid and remaining elements are enclave.
