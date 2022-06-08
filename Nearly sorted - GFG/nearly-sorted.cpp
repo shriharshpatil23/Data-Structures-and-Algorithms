@@ -12,14 +12,14 @@ class Solution
         // Your code here
         vector<int> ans;
         priority_queue<int,vector<int>,greater<int>> p;
-        for(int i=0;i<num;i++){
+        for(int i=0;i<=K;i++){
             p.push(arr[i]);
         }
-        // for(int i= K+1;i<num;i++){
-        //     ans.push_back(p.top());
-        //     p.pop();
-        //     p.push(arr[i]);
-        // }
+        for(int i= K+1;i<num;i++){
+            ans.push_back(p.top());
+            p.pop();
+            p.push(arr[i]);
+        }
         while(!p.empty()){
             ans.push_back(p.top());
             p.pop();
