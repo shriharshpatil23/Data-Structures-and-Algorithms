@@ -72,7 +72,6 @@ struct Node
 };
 
 */
-#include<bits/stdc++.h>
 
 class Solution
 {
@@ -82,51 +81,26 @@ class Solution
     {
         // code here
         // just remove the loop without losing any nodes
-       // unordered_set<Node*> s;
-        // Node * slow = head->next;
-        // Node * fast = head->next->next;
-        // bool isPresent = false;
-        // while(slow != NULL || fast != NULL){
-        //     if(slow == fast){
-        //         isPresent = true;
-        //         break;
-        //     }
+        Node * slow = head;
+        Node * fast = head;
+        while(fast!= NULL && fast->next!= NULL){
+            slow = slow->next;
+            fast = fast -> next ->next;
+            if(slow == fast)    break;
+        }
+        if(slow != fast )   return;
         
-        //     slow = slow->next;
-        //     fast = fast->next->next;
-        // }
-        // if(isPresent == false)  return;
-        
-        // s.insert(head);
-        // Node *tmp = head;
-        // while(1){
-        //     Node * t = tmp ->next;
-            
-        //     if(s.find(t)!= s.end()){
-        //         tmp->next = NULL;
-        //         break;
-        //     }
-        //     tmp = tmp->next;
-        //     s.insert(tmp);
-        // }
-         Node* temp = head;
-   
-       unordered_set<Node*>s;
-       int yo =1;
-       Node* sup = head;
-       while (temp->next != NULL){
-           
-           if (s.find(temp) != s.end()){
-               sup->next = NULL;
-               break;
-           }
-           s.insert(temp);
-           temp = temp->next;
-           if (yo !=1){
-               sup = sup->next;
-           }
-           yo++;
-       }
+        Node* prev = fast;
+        slow = head;
+        while(slow != fast){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        Node * final = slow;
+        while(final ->next != slow){
+            final = final -> next;
+        }
+        final ->next = NULL;
     }
 };
 
