@@ -49,28 +49,55 @@ void printList(struct node *node)
 class Solution
 {
     public:
-    struct node *reverse (struct node *head, int k)
-    { 
-        if(head==NULL) 	return NULL;		//base case
+    // struct node *reverse (struct node *head, int k)
+    // { 
+//         if(head==NULL) 	return NULL;		//base case
 
-	   struct node * curr = head;
-	   struct node * prev = NULL;
-	   struct node * next = curr->next;
+// 	   struct node * curr = head;
+// 	   struct node * prev = NULL;
+// 	   struct node * next = curr->next;
 
-	    int K = k;
+// 	    int K = k;
 
-    	while(curr != NULL && K--){
-	    next = curr->next;
-	    curr->next = prev;			//induction step
-	    prev = curr;
-	    curr = next;
-	    }
+//     	while(curr != NULL && K--){
+// 	    next = curr->next;
+// 	    curr->next = prev;			//induction step
+// 	    prev = curr;
+// 	    curr = next;
+// 	    }
 
 
-	if(next != NULL){
-		head -> next = reverse(next,k);		//hypothesis
-	}
-        return prev;
+// 	if(next != NULL){
+// 		head -> next = reverse(next,k);		//hypothesis
+// 	}
+//         return prev;
+
+   struct node *reverse (struct node *head, int k){ 
+        struct node* prev=NULL,*curr=head;
+        //note reverse means stack in somw way,shape or form
+        stack<struct node*> st;
+        
+        //P.S :- answer list refers to required linked list we are building
+        //prev points to last element in answer list
+        //curr points to element in given list
+        while(curr!=NULL){
+            for(int i=1;i<=k&&curr!=NULL;i++){
+                st.push(curr);curr=curr->next;//filling stack with k elements
+            }
+            
+            while(!st.empty()){
+                if(prev==NULL){
+                    prev=st.top();//setting head of answer list
+                    head=prev;st.pop();
+                }else{
+                    prev->next=st.top();//adding element to answer list
+                    st.pop();
+                    prev=prev->next;//moving to next element in answer list
+                }
+            }
+        }
+        prev->next=NULL;
+        return head;
     }
 };
 
