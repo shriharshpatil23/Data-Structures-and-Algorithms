@@ -10,25 +10,40 @@
  */
 class Solution {
 public:
-    bool pali(string t){
-        int s=0;
-        int e = t.size()-1;
-        while(s<e){
-            if(t[s]==t[e]){
-                s++;
-                e--;
-            }else{
-                return false;
-            }
+    
+    ListNode * reverse(ListNode * head){
+        ListNode * curr = head;
+        ListNode * prev = NULL;
+        ListNode * tmp = NULL;
+        while(curr){
+            tmp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = tmp;
+        }
+        return prev;
+    }
+    
+    ListNode * middle (ListNode * head){
+        ListNode * first = head;
+        ListNode * second = head;
+        while(second && second->next){
+            first = first ->next;
+            second = second -> next -> next;
+        }
+        return first;
+    }
+    
+    bool isPalindrome(ListNode* head) {
+        ListNode * start = head;
+        ListNode * mid = middle(head);
+        ListNode * mid2 = reverse(mid);
+        while(mid2){
+            if(mid2->val != start->val) return false;
+            
+            mid2 = mid2->next;
+            start = start->next;
         }
         return true;
-    }
-    bool isPalindrome(ListNode* head) {
-        string t = "";
-        while(head!=NULL){
-            t.push_back(head->val);
-            head = head ->next;
-        }
-        return pali(t);
     }
 };
