@@ -1,31 +1,34 @@
 class Solution {
 public:
+    int m ;
+    int n ;
     int t[101][101];
-    
-    bool isValid(int i,int j,vector<vector<int>>& grid){
-        if(i<0 || i>=grid.size() || j<0 || j>= grid[0].size() || grid[i][j]==1) return false;
+    bool isValid(int i, int j ,vector<vector<int>> &grid ){
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]==1) return false;
         
         return true;
     }
     
-    int helper(int i,int j,vector<vector<int>>& obstacleGrid){
-        if(isValid(i,j,obstacleGrid)==false)    return 0;
+    int helper(int i, int j , vector<vector<int>> &grid){
+        if(i==0 && j==0)    return t[i][j]=1;
         
-        if(i==obstacleGrid.size()-1 && j== obstacleGrid[0].size()-1)  return 1;
+        if(!isValid(i,j,grid))  return 0;
         
-        if(t[i][j]!= -1)    return t[i][j];
+        if(t[i][j] != -1)   return t[i][j];
         
-        //down
-        int down = helper(i+1,j,obstacleGrid);
-        //right
-        int right = helper(i,j+1,obstacleGrid);
+        //up
+        int up = helper(i-1,j,grid);
+        //left
+        int left = helper(i,j-1,grid);
         
-        return t[i][j] = down + right;
+        return t[i][j]=up + left;
     }
     
-    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+    int uniquePathsWithObstacles(vector<vector<int>>& grid) {
         memset(t,-1,sizeof(t));
-        int ans = helper(0,0,obstacleGrid);
-        return ans;
+        m = grid.size();
+        n = grid[0].size();
+        if(grid[m-1][n-1]==1 || grid[0][0]==1)  return 0;
+        return helper(m-1,n-1,grid);
     }
 };
