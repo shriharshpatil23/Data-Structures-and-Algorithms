@@ -11,7 +11,7 @@ public:
         int left = helper(i,j-1,matrix);
         int diagonal = helper(i-1,j-1,matrix);
         
-        if(matrix[i][j]=='1')   return t[i][j] = 1 + min(up,min(left,diagonal));
+        if(matrix[i][j]=='1')   return t[i][j] = 1 + min({left,up,diagonal});
         else    return t[i][j]=0;
     }
     
