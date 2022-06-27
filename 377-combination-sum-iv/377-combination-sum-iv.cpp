@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int t[1002][1002];
+   int t[1002][1002];
     
     int helper(int i,vector<int>& nums, int target){
         
