@@ -1,26 +1,27 @@
 class Solution {
 public:
-    int mem[1001][2][1001];
-    int wiggleMaxLength(vector<int>& nums) {
-        //memo.resize(nums.size()+1, vector<int>(2,-1) );
-        memset(mem,-1,sizeof(mem));
-        return max( dp(1,1,nums[0] ,nums) , dp(1,0,nums[0] ,nums) ) +1;
-    }
+    //This Dp is just same as Buy Sell Stocks DP !!!!!! Observe Carefully
     
-    int dp(int i, int high ,int prev,vector<int>& nums ){ //high 1 , 0 low
+    int t[1001][2][1001];
+        int helper(int i, int high ,int prev,vector<int>& nums ){ //high 1 , 0 low
         if(i==nums.size())return 0; 
-        if(mem[i][high][prev] >-1)return mem[i][high][prev];
+        if(t[i][high][prev] != -1)return t[i][high][prev];
         
         if(high){ //looking for high
-            if(nums[i] > prev)return mem[i][high][prev] = max(1 + dp(i+1, 0, nums[i],nums) , dp(i+1,1,prev,nums) ) ;
-            else return mem[i][high][prev] = dp(i+1,1,prev, nums);
+            if(nums[i] > prev)return t[i][high][prev] = max(1 + helper(i+1, 0, nums[i],nums) , helper(i+1,1,prev,nums) ) ;
+            else return t[i][high][prev] = helper(i+1,1,prev, nums);
         }
         
         else{ //looking for low
-             if(nums[i] < prev)return mem[i][high][prev] =  max(1+dp(i+1,1,nums[i] , nums) , dp(i+1,0,prev,nums));
-            else return mem[i][high][prev] = dp(i+1,0,prev ,nums);
+             if(nums[i] < prev)return t[i][high][prev] =  max(1+helper(i+1,1,nums[i] , nums) , helper(i+1,0,prev,nums));
+            else return t[i][high][prev] = helper(i+1,0,prev ,nums);
             
         }
         
     }
+    int wiggleMaxLength(vector<int>& nums) {
+        memset(t,-1,sizeof(t));
+        return max( helper(1,1,nums[0] ,nums) , helper(1,0,nums[0] ,nums) ) +1;
+    }
+    
 };
