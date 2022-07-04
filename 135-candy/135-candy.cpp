@@ -2,18 +2,19 @@ class Solution {
 public:
     int candy(vector<int>& ratings) {
         int n = ratings.size();
-        vector<int> left (n,1);
-        vector<int> right (n,1);
-        //for left hand side
-        for(int i=1;i<n;i++){
+        vector<int> left(n,1);
+        vector<int> right(n,1);
+        
+        //for left neighbour
+        for(int i = 1; i<n;i++){
             if(ratings[i]>ratings[i-1]){
-                left[i]=left[i-1]+1;
+                left[i] = 1 + left[i-1];
             }
         }
-        //for right hand side
-        for(int i = n-2;i>=0;i--){
+    //for right neighbour
+        for(int i=n-2;i>=0 ; i--){
             if(ratings[i]>ratings[i+1]){
-                right[i] = right[i+1] + 1;
+                right[i] = 1 + right[i+1];
             }
         }
         int ans = 0;
