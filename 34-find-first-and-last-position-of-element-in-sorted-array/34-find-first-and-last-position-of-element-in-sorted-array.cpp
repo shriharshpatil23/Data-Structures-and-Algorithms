@@ -1,46 +1,36 @@
 class Solution {
 public:
     vector<int> searchRange(vector<int>& a, int target) {
-        int s = 0, e = a.size()-1;
-	vector<int> ans(2, -1);
-	//first occurrence
-	while(s <= e){
-		int m = s + (e-s)/2;
-		if(a[m] < target)
-			s = m+1;
-		else if(a[m] > target)
-			e = m-1;
-		else{
-			if(m == s || a[m] != a[m-1]){
-				ans[0] = m;
-				break;
-			}
-			else{
-				e = m-1;
-				ans[0] = m-1;
-			}
-		}
-	}
-
-	//last occurrence
-	s = 0, e = a.size()-1;
-	while(s <= e){
-		int m = s + (e-s)/2;
-		if(a[m] < target)
-			s = m+1;
-		else if(a[m] > target)
-			e = m-1;
-		else{
-			if(m == e || a[m] != a[m+1]){
-				ans[1] = m;
-				break;
-			}
-			else{
-				s = m+1;
-				ans[1] = m+1;
-			}
-		}
-	}
-	return ans; 
+        int start = 0;
+        int end = a.size()-1;
+        int mid ;
+        vector<int> ans(2,-1);
+        //for 1 st occurence
+        while(start<=end){
+            mid = start + (end - start)/2;
+            if(a[mid]==target){
+                ans[0]=mid;
+                end = mid - 1;
+            }else   if(a[mid]>target){
+                end = mid - 1;
+            }else{
+                start = mid + 1;
+            }
+        }
+        //for last occurence
+        start = 0;
+        end = a.size()-1;
+        while(start<=end){
+            mid = start + (end - start)/2;
+            if(a[mid]==target){
+                ans[1]=mid;
+                start = mid + 1;
+            }else   if(a[mid]>target){
+                end = mid - 1;
+            }else{
+                start = mid + 1;
+            }
+        }
+        return ans;
     }
 };
