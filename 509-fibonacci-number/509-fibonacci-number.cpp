@@ -1,14 +1,15 @@
 class Solution {
 public:
     int t[31];
-    
     int helper(int n){
-        if(n==0)    return 0;
-        if(n==1)    return 1;
+        //base case
+        if(n==0)    return t[n] = 0;
+        
+        if(n==1)    return t[n] = 1;
         
         if(t[n]!= -1)   return t[n];
         
-        return t[n] = helper(n-1)+helper(n-2);
+        return helper(n-1) + helper(n-2);
     }
     
     int fib(int n) {
