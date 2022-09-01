@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    int ans = 0;
+    //------ Solution 1 : ------------//
 //     int helper(TreeNode * root , int mx){
 //         if(root==NULL)  return 0;
         
@@ -24,18 +24,34 @@ public:
 //         return  cnt;
     
 //     }
+    // --------Solution 2 : -----------//
     
-    void preOrder(TreeNode * root, int max){
-        if(root==NULL)  return;
+    
+//     int ans = 0;
+//     void preOrder(TreeNode * root, int max){
+//         if(root==NULL)  return;
         
-        if(root->val >= max)    ans++ , max = root->val;
-        preOrder(root->left,max);
-        preOrder(root->right,max);
+//         if(root->val >= max)    ans++ , max = root->val;
+//         preOrder(root->left,max);
+//         preOrder(root->right,max);
+//     }
+    
+    // -------------- Solution 3 : ------------//
+    
+    
+    int helper(TreeNode * root, int mx){
+        if(root==NULL)  return 0;
+        
+        if(root->val>=mx){
+            return 1 + helper(root->left,root->val)+helper(root->right,root->val);
+        }
+        return helper(root->left,mx)+helper(root->right,mx);
     }
     
     int goodNodes(TreeNode* root) {
-        // return helper(root,INT_MIN); 
-        preOrder(root,INT_MIN);
-        return ans;
+        // return helper(root,INT_MIN);         // Sol : 1
+        // preOrder(root,INT_MIN);              // Sol : 2
+        // return ans;
+        return helper(root,INT_MIN);            // Sol : 3
     }
 };
